@@ -22,13 +22,15 @@ namespace ZhoskiyBenchSharp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("KdRatio")
-                        .HasColumnType("int");
+                    b.Property<string>("KdRatio")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("LoveToSuckCocks")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

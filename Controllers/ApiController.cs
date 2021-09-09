@@ -31,5 +31,14 @@ namespace ZhoskiyBenchSharp.Controllers
         {
             return await _context.Bears.ToListAsync();
         }
+
+        [HttpPost("create-data")]
+        public async Task<IActionResult> CreateData([FromBody] Bear bear)
+        {
+            await _context.AddAsync(bear);
+            await _context.SaveChangesAsync();
+
+            return new OkResult();
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace ZhoskiyBenchSharp
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "ZhoskiyBenchSharp", Version = "v1"});
             });
 
-            var connectionString = Configuration["MysqlConnectionString"];
+            var connectionString = Configuration["MYSQL_CONNECTION_STRING"];
             var serverVersion = new MariaDbServerVersion(new Version(10, 5, 0));
             
             services.AddDbContext<AppContext>(

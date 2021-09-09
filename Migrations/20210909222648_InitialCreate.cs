@@ -16,9 +16,10 @@ namespace ZhoskiyBenchSharp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    KdRatio = table.Column<int>(type: "int", nullable: false),
+                    KdRatio = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     LoveToSuckCocks = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
