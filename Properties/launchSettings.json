@@ -9,7 +9,9 @@
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "MYSQL_CONNECTION_STRING": "Server=localhost;Database=zhoskiy-bench-sharp;Uid=root;Pwd=123321;"
+        "MYSQL_CONNECTION_STRING": "Server=localhost;Database=zhoskiy-bench-sharp;Uid=root;Pwd=123321;",
+        "ZHOSKA_MIGRIROVAT_DB": "false",
+        "ZHOSKA_NAPOLNIT_DB": "false"
       }
     }
   }

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Pomelo.EntityFrameworkCore.MySql;
+using ZhoskiyBenchSharp.Models;
 
 namespace ZhoskiyBenchSharp
 {
@@ -38,12 +39,14 @@ namespace ZhoskiyBenchSharp
             var serverVersion = new MariaDbServerVersion(new Version(10, 5, 0));
             
             services.AddDbContext<AppContext>(
-                options => options.UseMySql(connectionString, serverVersion)
-            );
+                options =>
+                {
+                    options.UseMySql(connectionString, serverVersion);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppContext context)
         {
             if (env.IsDevelopment())
             {
@@ -55,6 +58,37 @@ namespace ZhoskiyBenchSharp
             app.UseRouting();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            var migrirovatDb = Configuration["ZHOSKA_MIGRIROVAT_DB"];
+
+            if (migrirovatDb == "true")
+            {
+                Console.WriteLine("Жоска мигрирую базу");
+                context.Database.Migrate();
+                Console.WriteLine("Жоска мигрировал");
+            }
+            
+            var napolnitDb = Configuration["ZHOSKA_NAPOLNIT_DB"];
+
+            if (napolnitDb == "true")
+            {
+                Console.WriteLine("Жоска наполняю базу");
+                var bears = new Bear[5000];
+
+                for (int i = 0; i < bears.Length; i++)
+                {
+                    bears[i] = new Bear
+                    {
+                        Name = "Sanes",
+                        KdRatio = "5/1",
+                        LoveToSuckCocks = true
+                    };
+                }
+
+                context.Bears.AddRange(bears);
+                context.SaveChanges();
+                Console.WriteLine("Жоска наполнил базу");
+            }
         }
     }
 }
