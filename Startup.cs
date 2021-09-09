@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Pomelo.EntityFrameworkCore.MySql;
 
 namespace ZhoskiyBenchSharp
 {
@@ -31,6 +33,13 @@ namespace ZhoskiyBenchSharp
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "ZhoskiyBenchSharp", Version = "v1"});
             });
+
+            var connectionString = Configuration["MysqlConnectionString"];
+            var serverVersion = new MariaDbServerVersion(new Version(10, 5, 0));
+            
+            services.AddDbContext<AppContext>(
+                options => options.UseMySql(connectionString, serverVersion)
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
